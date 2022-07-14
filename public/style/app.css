@@ -1,0 +1,40 @@
+* {
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+/* INICIO TELA DE LOGIN */
+
+.header-login {
+    text-align: center;
+}
+
+.login-section {
+    display: flex;
+    justify-content: center;
+}
+
+.login-body {
+    width: 50%;
+}
+
+.title-login {
+    width: 100%;
+    text-align: center;
+}
+
+.class-login-inputs {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.label-login {
+    width: 100%;
+}
+
+.login-input {
+
+}
+
+/* FINAL TELA DE LOGIN */
