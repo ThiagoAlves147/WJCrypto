@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Middlewares;
+namespace App\Middlewares;
 
 use Pecee\Http\Middleware\BaseCsrfVerifier;
 

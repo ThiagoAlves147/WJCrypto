@@ -1,10 +1,18 @@
 {
     "require": {
-        "pecee/simple-router": "4.3.7.2"
+        "pecee/simple-router": "4.3.7.2",
+        "php-di/php-di": "^6.4",
+        "monolog/monolog": "^3.1"
     },
 	"autoload": {
 		"psr-4": {
-			"WJCrypto\\": "app/"
+			"App\\": "app/"
 		}
-	}
+	},
+	"authors": [
+		{
+			"name": "Thiago Alves Pereira",
+			"email": "thiago.pereira@webjump.com.br"
+		}
+	]
 }

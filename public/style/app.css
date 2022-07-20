@@ -5,36 +5,79 @@
 
 /* INICIO TELA DE LOGIN */
 
-.header-login {
+.header-login{
     text-align: center;
+}
+
+.login-container, .login-title, .login-form, .login-label,.login-button{
+    display: flex;
+    justify-content: center;
 }
 
 .login-section {
-    display: flex;
-    justify-content: center;
+    width: 32.0%;
+    padding: 20px;
+    box-shadow: 1px 2px 4px 1px rgb(129, 127, 127);
+    background-color: white;
+    border-radius: 13px;
+    height: auto;
 }
 
-.login-body {
-    width: 50%;
-}
-
-.title-login {
-    width: 100%;
-    text-align: center;
-}
-
-.class-login-inputs {
-    display: flex;
-    justify-content: center;
+.login-form {
     flex-wrap: wrap;
 }
 
-.label-login {
+.login-label {
     width: 100%;
+    margin: 10px;
 }
 
 .login-input {
+    width: 100%;
+    border: none;
+    border-bottom: 1.5px black solid;
+    font-size: 15px;
+}
 
+#check {
+    display: flex;
+    justify-content: start;
+    width: 95%;
+}
+
+.login-input::placeholder{
+    font-size: 15.5px;
+}
+
+.login-input:focus {
+    border-bottom: 2px black solid;
+    box-shadow: none;
+    outline: 0;
+}
+
+.logar {
+    margin-top: 15px;
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 100px;
+    height: 40px;
+    background-color: #4C0677;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.logar:hover {
+    opacity: 0.7;
+}
+
+.login-link {
+    color: blue;
+    text-decoration-style: dotted;
+}
+
+.login-link:hover {
+    text-decoration: underline;
 }
 
 /* FINAL TELA DE LOGIN */
