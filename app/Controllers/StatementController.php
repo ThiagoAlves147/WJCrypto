@@ -1,21 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controllers;
 
-use App\Database\Database;
+use App\Interface\DatabaseInterface;
+use Helper;
 
 class StatementController
 {
     private $database;
 
-    function __construct(Database $database)
+    function __construct()
     {
-        $this->database = $database;
+        $container = require_once __DIR__."/../DI/Builder.php";
+        $this->database = $container->get(\DI\get(DatabaseInterface::class)); 
+        
     }
 
-    public function getStatements(): string
+    public function getStatements()
     {
         $test = $this->database->conn->query("SELECT * FROM test");
-        return $test;
     }
 }
