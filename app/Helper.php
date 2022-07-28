@@ -1,5 +1,8 @@
 <?php
 
+namespace App;
+
+use App\DI\Builder;
 use Pecee\SimpleRouter\SimpleRouter as Router;
 use Pecee\Http\Url;
 use Pecee\Http\Response;
@@ -7,7 +10,7 @@ use Pecee\Http\Request;
 
 class Helper
 {
-
+ 
 /**
  * Get url for a route by using either name/alias, class or method name.
  *
@@ -88,5 +91,10 @@ public function csrf_token(): ?string
     }
 
     return null;
+}
+
+public static function getContainer($dependency) 
+{
+    return Builder::buildContainer()->get($dependency);
 }
 }

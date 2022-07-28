@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '1ec3499b2c7b12dbde743f8e3cb2d977c9014f60',
+        'reference' => '73f62a75ca8cadeb2ebfffd439adf89c0b382a40',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '1ec3499b2c7b12dbde743f8e3cb2d977c9014f60',
+            'reference' => '73f62a75ca8cadeb2ebfffd439adf89c0b382a40',
             'dev_requirement' => false,
         ),
         'laravel/serializable-closure' => array(
