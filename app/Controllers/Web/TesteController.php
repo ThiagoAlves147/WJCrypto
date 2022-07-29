@@ -8,7 +8,7 @@ class TesteController
 {
     public function request(Request $request)
     {
-        $teste = $request->getInputHandler()->value('nome');
+        $teste = $request->getInputHandler()->value('nome',);
         var_dump($teste);
     }
 }

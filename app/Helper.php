@@ -93,8 +93,25 @@ public function csrf_token(): ?string
     return null;
 }
 
-public static function getContainer($dependency) 
+public function input_exist(array $index = NULL): bool
 {
-    return Builder::buildContainer()->get($dependency);
+
+    if($index != NULL){
+        $flag = true;
+        $inputs[] = $_POST;
+
+        foreach($index as $item){
+            if(!array_key_exists($item, $inputs[0])){
+                $flag = false;
+                break;
+            }
+        }
+
+        return $flag;
+            
+    } 
+    
+    return false;
 }
+
 }

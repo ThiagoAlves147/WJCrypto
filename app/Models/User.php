@@ -9,6 +9,7 @@ use App\Interface\UserModelInterface;
 class User implements UserModelInterface
 {
     private $userId;
+    private $userAccNumber;
     private $userName;
     private $userPassword;
     private $userCompanyName;
@@ -21,110 +22,119 @@ class User implements UserModelInterface
     private $userPhone;
     private $userAdress;
 
-    public function getUserId($id)
+    public function setUserId($id)
     {
         $this->userId = $id;
     }
-    public function setUserId()
+    public function getUserId()
     {
         return $this->userId;
     }
 
-    public function getUserName($name)
+    public function setUserAccountNumber($accNumber)
     {
-        $this->userName = $name;
+        $this->userAccNumber = $accNumber;
     }
-    public function setUserName()
+    public function getUserAccountNumber()
+    {
+        return $this->userAccNumber;
+    }
+
+    public function setUserName($name)
+    {
+        $this->userName = ucwords(strtolower(trim($name)));
+    }
+    public function getUserName()
     {
         return $this->userName;
     }
 
-    public function getUserPassword($password)
+    public function setUserPassword($password)
     {
-        $this->userPassword = $password;
+        $this->userPassword = password_hash($password, PASSWORD_DEFAULT);
     }
-    public function setUserPassword()
+    public function getUserPassword()
     {
         return $this->userPassword;
     }
 
-    public function getUserCompanyName($companyName)
+    public function setUserCompanyName($companyName)
     {
-        $this->userCompanyName = $companyName;
+        $this->userCompanyName = ucfirst(strtolower(trim($companyName)));
     }
-    public function setUserCompanyName()
+    public function getUserCompanyName()
     {
         return $this->userCompanyName;
     }
 
-    public function getUserCpf($cpf)
+    public function setUserCpf($cpf)
     {
         $this->userCpf = $cpf;
     }
-    public function setUserCpf()
+    public function getUserCpf()
     {
         return $this->userCpf;
     }
 
-    public function getUserCnpj($cnpj)
+    public function setUserCnpj($cnpj)
     {
         $this->userCnpj = $cnpj;
     }
-    public function setUserCnpj()
+    public function getUserCnpj()
     {
         return $this->userCnpj;
     }
 
-    public function getUserRg($rg)
+    public function setUserRg($rg)
     {
         $this->userRg = $rg;
     }
-    public function setUserRg()
+    public function getUserRg()
     {
         return $this->userRg;
     }
 
-    public function getUserStateRegistration($stateRegistration)
+    public function setUserStateRegistration($stateRegistration)
     {
         $this->userStateRegistration = $stateRegistration;
     }
-    public function setUserStateRegistration()
+    public function getUserStateRegistration()
     {
         return $this->userStateRegistration;
     }
 
-    public function getUserBirthDay($birthDay)
+    public function setUserBirthDay($birthDay)
     {
         $this->userBirthDay = $birthDay;
     }
-    public function setUserBirthDay()
+    public function getUserBirthDay()
     {
         return $this->userBirthDay;
     }
 
-    public function getUserFoundationDay($foundationDay)
+    public function setUserFoundationDay($foundationDay)
     {
         $this->userFoundationDay = $foundationDay;
     }
-    public function setUserFoundationDay()
+    public function getUserFoundationDay()
     {
         return $this->userFoundationDay;
     }
 
-    public function getUserPhone($phone)
+    public function setUserPhone($phone)
     {
         $this->userPhone = $phone;
     }
-    public function setUserPhone()
+    public function getUserPhone()
     {
         return $this->userPhone;
     }
 
-    public function getUserAdress($adress)
+    public function setUserAdress($adress)
     {
-        $this->userAdress = $adress;
+        $this->userAdress = ucfirst(strtolower(trim($adress)));
     }
-    public function setUserAdress()
+    public function getUserAdress()
     {
         return $this->userAdress;
     }

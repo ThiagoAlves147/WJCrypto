@@ -6,39 +6,42 @@ namespace App\Interface;
 
 Interface UserModelInterface
 {
-    public function getUserId($id);
-    public function setUserId();
+    public function setUserId($id);
+    public function getUserId();
 
-    public function getUserName($name);
-    public function setUserName();
+    public function setUserAccountNumber($accNumber);
+    public function getUserAccountNumber();
 
-    public function getUserPassword($password);
-    public function setUserPassword();
+    public function setUserName($name);
+    public function getUserName();
 
-    public function getUserCompanyName($companyName);
-    public function setUserCompanyName();
+    public function setUserPassword($password);
+    public function getUserPassword();
 
-    public function getUserCpf($cpf);
-    public function setUserCpf();
+    public function setUserCompanyName($companyName);
+    public function getUserCompanyName();
 
-    public function getUserCnpj($cnpj);
-    public function setUserCnpj();
+    public function setUserCpf($cpf);
+    public function getUserCpf();
 
-    public function getUserRg($rg);
-    public function setUserRg();
+    public function setUserCnpj($cnpj);
+    public function getUserCnpj();
 
-    public function getUserStateRegistration($stateRegistrarion);
-    public function setUserStateRegistration();
+    public function setUserRg($rg);
+    public function getUserRg();
 
-    public function getUserBirthDay($birthDay);
-    public function setUserBirthDay();
+    public function setUserStateRegistration($stateRegistrarion);
+    public function getUserStateRegistration();
 
-    public function getUserFoundationDay($foundationDay);
-    public function setUserFoundationDay();
+    public function setUserBirthDay($birthDay);
+    public function getUserBirthDay();
 
-    public function getUserPhone($phone);
-    public function setUserPhone();
+    public function setUserFoundationDay($foundationDay);
+    public function getUserFoundationDay();
 
-    public function getUserAdress($adress);
-    public function setUserAdress();
+    public function setUserPhone($phone);
+    public function getUserPhone();
+
+    public function setUserAdress($adress);
+    public function getUserAdress();
 }
