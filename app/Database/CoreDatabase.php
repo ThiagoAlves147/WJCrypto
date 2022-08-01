@@ -5,22 +5,25 @@ declare(strict_types=1);
 namespace App\Database;
 
 use App\Interface\DatabaseInterface;
+use App\Logs\MainLogger;
 use Exception;
 use PDOException;
 
 class CoreDatabase
 {
     private DatabaseInterface $conn;
+    private MainLogger $logger;
 
-    public function __construct(DatabaseInterface $database)
+    public function __construct(DatabaseInterface $database, MainLogger $log)
     {
         $this->conn = $database;
+        $this->logger = $log;
     }
 
-    public function selectStatementsById(): object
+    public function selectStatementsById()
     {
-        $test = $this->conn->getDbConnection()->query("SELECT * FROM test WHERE name='Thiago'");
-        $item = $test->fetch();
+        $test = $this->conn->getDbConnection()->query("SELECT * FROM test");
+        $item = $test->fetchAll();
         return $item;
     }
 
@@ -30,10 +33,9 @@ class CoreDatabase
          * InsertNewUser
          *
          * Type can receive number 1 or 2
-         * Number 1 means that the user is an pessoa fisica
-         * Number 2 means that the user is an legal person
+         * Number 1 means that the user is a natural person
+         * Number 2 means that the user is a legal person
          * 
-         * @return 
         */
 
         if($type != NULL && !empty($item)){
@@ -43,10 +45,9 @@ class CoreDatabase
                 case 1:
                     try {
                         $sql = $this->conn->getDbConnection()->prepare('INSERT INTO
-                        usuarios (numero_conta, nome, senha, cpf, rg, data_nasc, telefone, endereco)
-                        VALUES (:nConta, :nome, :senha, :cpf, :rg, :dataNasc, :telefone, :endereco)');
+                        usuarios (nome, senha, cpf, rg, data_nasc, telefone, endereco)
+                        VALUES (:nome, :senha, :cpf, :rg, :dataNasc, :telefone, :endereco)');
 
-                        $sql->bindValue(':nConta', $item->getUserAccountNumber());
                         $sql->bindValue(':nome', $item->getUserName());
                         $sql->bindValue(':senha', $item->getUserPassword());
                         $sql->bindValue(':cpf', $item->getUserCpf());
@@ -83,4 +84,82 @@ class CoreDatabase
         }
 
     }
+
+    public function depositValue(object $item): void
+    {
+        if($item != NULL){
+            $sql = $this->conn->getDbConnection()->prepare("UPDATE conta set saldo=(saldo+:value) WHERE numero_conta=:account");
+            $sql->bindValue(':value', $item->getTransictionValue());
+            $sql->bindValue(':account', $item->getAccountNumber());
+            $sql->execute();
+
+            if($sql->rowCount() > 0 ){
+                $flag = true;
+                var_dump($flag);
+            } else {
+                $flag = false;
+                var_dump($flag);
+            }
+        }
+    }
+
+    public function transferValue(object $item): void
+    {
+        try {
+            if($item != NULL){
+                $sql = $this->conn->getDbConnection()->prepare("UPDATE conta set saldo=(saldo-:value) WHERE numero_conta=362072503");
+                $sql->bindValue(':value', $item->getTransictionValue());
+                //$sql->bindValue(':account', $item->getAccountNumber());
+                $sql->execute();
+    
+                if($sql -> rowCount() > 0){
+                    $sql = $this->conn->getDbConnection()->prepare("UPDATE conta set saldo=(saldo+:value) WHERE numero_conta=:account");
+                    $sql->bindValue(':value', $item->getTransictionValue());
+                    $sql->bindValue(':account', $item->getAccountNumber());
+                    $sql->execute();
+
+                    $this->logger->setLog('Transferência realizada', [
+                        'De: ' => 362072503,
+                        'Para' => $item->getAccountNumber(),
+                        'Valor: ' => $item->getTransictionValue()
+                    ]);
+                }
+            }
+        } catch (PDOException $e){
+            $this->logger->setLog('Falha na hora de transferir', [
+                'De: ' => 362072503,
+                'Para' => $item->getAccountNumber(),
+                'Valor: ' => $item->getTransictionValue(),
+                'Error: ' => $e->getMessage()
+            ]);
+        }
+
+    }
+
+    public function withdrawnValue(object $item)
+    {
+        if($item != NULL){
+            try {
+                $sql = $this->conn->getDbConnection()->prepare("UPDATE conta set sald=(saldo-:value) WHERE numero_conta=362072503");
+                $sql->bindValue(':value', $item->getTransictionValue());
+                //$sql->bindValue(':account', $item->getAccountNumber());
+                $sql->execute();
+
+                $this->logger->setLog('Saque realizado', [
+                    'Conta: ' => 362072503,
+                    'Valor: ' => $item->getTransictionValue()
+                ]);
+
+            } catch (PDOException $e){
+
+                $this->logger->setLog('Falha! Tentativa de saque', [
+                    'Conta: ' => 362072503,
+                    'Error' => $e->getMessage()
+                ]);
+                
+            }
+
+        }
+    }
+
 }

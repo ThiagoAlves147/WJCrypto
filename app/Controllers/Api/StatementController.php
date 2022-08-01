@@ -27,12 +27,14 @@ class StatementController
     {
         $teste = $this->query->selectStatementsById();
 
-        $teste = [
-            'nome' => $teste['name'],
-            'sobrenome' => $teste['sobrenome'],
-            'email' => $teste['email']
-        ];
+        // $teste = [
+        //     'nome' => $teste['name'],
+        //     'sobrenome' => $teste['sobrenome'],
+        //     'email' => $teste['email']
+        // ];
 
+        //var_dump($teste);
+        //header("Content-Type: application/json");
         return json_encode($teste);
     }
 }

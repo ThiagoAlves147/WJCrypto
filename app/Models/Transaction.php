@@ -6,30 +6,34 @@ use App\Interface\TransactionInterface;
 
 class Transaction implements TransactionInterface
 {
-    public function setAccountNumber()
-    {
+    private $accNumber;
+    private $transictionValue;
+    private $balance;
 
+    public function setAccountNumber($accNumber)
+    {
+        $this->accNumber = $accNumber;
     }
     public function getAccountNumber()
     {
-
+        return $this->accNumber;
     }
 
-    public function setDepositAmount()
+    public function setTransictionValue($transictionValue)
     {
-
+        $this->transictionValue = $transictionValue;
     }
-    public function getDepositAmount()
+    public function getTransictionValue()
     {
-
+        return $this->transictionValue;
     }
 
-    public function setBalance()
+    public function setBalance($balance)
     {
-
+        $this->balance = $balance;
     }
     public function getBalance()
     {
-
+        return $this->balance;
     }
 }

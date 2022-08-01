@@ -12,4 +12,4 @@ Router::setCustomClassLoader(new ClassLoader());
 Router::get('/', [StatementController::class, 'getStatements']);
 
 Router::get('/login', [TesteController::class, 'request']);
-Router::post('/login', [TesteController::class, 'request']);
+//Router::post('/login', [TesteController::class, 'request']);

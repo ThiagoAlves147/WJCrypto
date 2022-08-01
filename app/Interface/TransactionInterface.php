@@ -4,13 +4,13 @@ namespace App\Interface;
 
 interface TransactionInterface
 {
-    public function setAccountNumber();
+    public function setAccountNumber($accNumber);
     public function getAccountNumber();
 
-    public function setDepositAmount();
-    public function getDepositAmount();
+    public function setTransictionValue($depositAmount);
+    public function getTransictionValue();
 
-    public function setBalance();
+    public function setBalance($balance);
     public function getBalance();
     
 }
