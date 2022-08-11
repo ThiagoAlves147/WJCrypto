@@ -14,7 +14,9 @@ use App\Middlewares\Auth;
 use App\Router;
 
 Router::group(['prefix' => '/wjcrypto/api/'], function(){
-    
+
+    Router::post('users/auth', [UserController::class, 'auth']);
+
     Router::group(['middleware', Auth::class], function(){
         Router::post('users/create', [UserController::class, 'createUser']);
         Router::post('users/deposit', [TransactionController::class, 'depositValue']);
