@@ -2,7 +2,9 @@
     "require": {
         "pecee/simple-router": "4.3.7.2",
         "php-di/php-di": "^6.4",
-        "monolog/monolog": "^3.1"
+        "monolog/monolog": "^3.1",
+        "twig/twig": "^3.4",
+        "guzzlehttp/guzzle": "^7.4"
     },
 	"autoload": {
 		"psr-4": {

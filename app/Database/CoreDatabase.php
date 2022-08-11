@@ -27,7 +27,7 @@ class CoreDatabase
         return $item;
     }
 
-    public function insertNewUser(int $type = NULL, object $item): void
+    public function insertNewUser(int $type = NULL, object $item)
     {
         /**
          * InsertNewUser
@@ -44,26 +44,33 @@ class CoreDatabase
             switch ($type) {
                 case 1:
                     try {
-                        $sql = $this->conn->getDbConnection()->prepare('INSERT INTO
-                        usuarios (nome, senha, cpf, rg, data_nasc, telefone, endereco)
-                        VALUES (:nome, :senha, :cpf, :rg, :dataNasc, :telefone, :endereco)');
+                        $verify = $this->verifyIfDocummentAlredyExist($item->getUserCpf());
 
-                        $sql->bindValue(':nome', $item->getUserName());
-                        $sql->bindValue(':senha', $item->getUserPassword());
-                        $sql->bindValue(':cpf', $item->getUserCpf());
-                        $sql->bindValue(':rg', $item->getUserRg());
-                        $sql->bindValue(':dataNasc', $item->getUserBirthDay());
-                        $sql->bindValue(':telefone', $item->getUserPhone());
-                        $sql->bindValue(':endereco', $item->getUserAdress());
-                        $sql->execute();
-
-                        if($sql->rowCount() > 0){
-                            $flag = true;
-                            $item->setUserId($this->conn->getDbConnection()->lastInsertId());
+                        if($verify === true){
+                            $sql = $this->conn->getDbConnection()->prepare('INSERT INTO
+                            usuarios (nome, senha, cpf, rg, data_nasc, telefone, endereco)
+                            VALUES (:nome, :senha, :cpf, :rg, :dataNasc, :telefone, :endereco)');
+    
+                            $sql->bindValue(':nome', $item->getUserName());
+                            $sql->bindValue(':senha', $item->getUserPassword());
+                            $sql->bindValue(':cpf', $item->getUserCpf());
+                            $sql->bindValue(':rg', $item->getUserRg());
+                            $sql->bindValue(':dataNasc', $item->getUserBirthDay());
+                            $sql->bindValue(':telefone', $item->getUserPhone());
+                            $sql->bindValue(':endereco', $item->getUserAdress());
+                            $sql->execute();
+    
+                            if($sql->rowCount() > 0){
+                                $flag = true;
+                                $item->setUserId($this->conn->getDbConnection()->lastInsertId());
+                            }
                         }
 
                     } catch (PDOException $e){
-                        var_dump($e->getMessage());
+                        $this->logger->setLog('Erro ao criar no usuário', [
+                            'Número da conta: ' => $item->getUserAccountNumber(),
+                            'Error' => $e->getMessage()
+                        ]);
                     }
                 case 2:
                     try {
@@ -80,6 +87,11 @@ class CoreDatabase
                 $sql->bindValue(':idUsuario', $item->getUserId());
                 $sql->bindValue(':nConta', $item->getUserAccountNumber());
                 $sql->execute();
+
+                $this->logger->setLog('Nova conta criada', [
+                    'Número da conta: ' => $item->getUserAccountNumber(),
+                    'CPF: ' => $item->getUserCpf()
+                ]);
             }
         }
 
@@ -88,18 +100,46 @@ class CoreDatabase
     public function depositValue(object $item): void
     {
         if($item != NULL){
-            $sql = $this->conn->getDbConnection()->prepare("UPDATE conta set saldo=(saldo+:value) WHERE numero_conta=:account");
-            $sql->bindValue(':value', $item->getTransictionValue());
-            $sql->bindValue(':account', $item->getAccountNumber());
-            $sql->execute();
+            try {
+                $sql = $this->conn->getDbConnection()->prepare("UPDATE conta set saldo=(saldo+:value) WHERE numero_conta=:account");
+                $sql->bindValue(':value', $item->getTransictionValue());
+                $sql->bindValue(':account', $item->getAccountNumber());
+                $sql->execute();
 
-            if($sql->rowCount() > 0 ){
-                $flag = true;
-                var_dump($flag);
-            } else {
-                $flag = false;
-                var_dump($flag);
+                if($sql->rowCount() > 0){
+                    try {
+                        $sql = $this->conn->getDbConnection()->prepare('INSERT INTO extrato VALUES(
+                            2, :conta, "Deposito", :valor
+                        )');
+    
+                        $sql->bindValue(':conta', $item->getAccountNumber());
+                        $sql->bindValue(':valor', $item->getTransictionValue());
+                        $sql->execute();
+    
+                        $this->logger->setLog('Novo deposito feito', [
+                            'Conta' => $item->getAccountNumber(),
+                            'Valor: ' => $item->getTransictionValue(),
+                        ]);
+
+                    } catch(PDOException $e) {
+                        $this->logger->setLog('Erro ao executar extrato do deposito', [
+                            'Conta' => $item->getAccountNumber(),
+                            'Valor: ' => $item->getTransictionValue(),
+                            'Error' => $e->getMessage()
+                        ]);
+                    }
+
+                }
+
+            } catch (PDOException $e){
+
+                $this->logger->setLog('Falha em depositar', [
+                    'Conta' => $item->getAccountNumber(),
+                    'Valor: ' => $item->getTransictionValue(),
+                    'Error: ' => $e->getMessage()
+                ]);
             }
+
         }
     }
 
@@ -107,7 +147,7 @@ class CoreDatabase
     {
         try {
             if($item != NULL){
-                $sql = $this->conn->getDbConnection()->prepare("UPDATE conta set saldo=(saldo-:value) WHERE numero_conta=362072503");
+                $sql = $this->conn->getDbConnection()->prepare("UPDATE conta set saldo=(saldo-:value) WHERE numero_conta=338869337");
                 $sql->bindValue(':value', $item->getTransictionValue());
                 //$sql->bindValue(':account', $item->getAccountNumber());
                 $sql->execute();
@@ -140,19 +180,19 @@ class CoreDatabase
     {
         if($item != NULL){
             try {
-                $sql = $this->conn->getDbConnection()->prepare("UPDATE conta set sald=(saldo-:value) WHERE numero_conta=362072503");
+                $sql = $this->conn->getDbConnection()->prepare("UPDATE conta set saldo=(saldo-:value) WHERE numero_conta=:account");
                 $sql->bindValue(':value', $item->getTransictionValue());
-                //$sql->bindValue(':account', $item->getAccountNumber());
+                $sql->bindValue(':account', $item->getAccountNumber());
                 $sql->execute();
 
                 $this->logger->setLog('Saque realizado', [
-                    'Conta: ' => 362072503,
+                    'Conta: ' => $item->getAccountNumber(),
                     'Valor: ' => $item->getTransictionValue()
                 ]);
 
             } catch (PDOException $e){
 
-                $this->logger->setLog('Falha! Tentativa de saque', [
+                $this->logger->setLog('Falha ao tentar realizar saque', [
                     'Conta: ' => 362072503,
                     'Error' => $e->getMessage()
                 ]);
@@ -160,6 +200,37 @@ class CoreDatabase
             }
 
         }
+    }
+
+    public function verifyIfDocummentAlredyExist(int|string $data): bool
+    {
+        if($data){
+            try {
+
+                $sql = $this->conn->getDbConnection()->query("SELECT * FROM usuarios WHERE cpf='$data' OR cnpj='$data'");
+    
+                if($sql->rowCount() > 0){
+
+                    $this->logger->setLog('Falha ao tentar criar novo usuário', [
+                        'Error' => 'Usuário já existente'
+                    ]);
+
+                    return false;
+                }
+
+                return true;
+    
+            } catch (PDOException $e){
+    
+                $this->logger->setLog('Erro na tentativa de verificar usuário', [
+                    'Error' => $e->getMessage()
+                ]);
+                
+            }
+        }
+
+        return false;
+
     }
 
 }

@@ -6,7 +6,6 @@ namespace App\Controllers\Api;
 
 use App\Database\CoreDatabase;
 use App\Helper;
-use App\Interface\DatabaseInterface;
 use App\Interface\UserModelInterface;
 use Pecee\Http\Request;
 
@@ -29,16 +28,17 @@ class UserController
 
     public function createUser(Request $request): void
     {
-        $inputs = $this->helper->input_exist([
-            'name', 
-            'password', 
-            'cpf', 
-            'rg', 
-            'data_nasc', 
-            'phone', 'adress'
-        ]);
+        // $inputs = $this->helper->input_exist([
+        //     'name', 
+        //     'cpf',
+        //     'rg', 
+        //     'data_nasc',
+        //     'phone',
+        //     'adress',
+        //     'password'
+        // ]);
 
-        if($inputs){
+        // if($inputs){
             self::$user->setUserAccountNumber(mt_rand(300000000, 399999999));
             self::$user->setUserName($request->getInputHandler()->value('name'));
             self::$user->setUserPassword($request->getInputHandler()->value('password'));
@@ -49,7 +49,7 @@ class UserController
             self::$user->setUserAdress($request->getInputHandler()->value('adress'));
     
             $this->query->insertNewUser(1, self::$user);
-        }
+        // }
 
     }   
 }

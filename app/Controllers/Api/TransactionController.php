@@ -28,49 +28,49 @@ class TransactionController
 
     public function depositValue(Request $request): void
     {
-        $inputs = $this->helper->input_exist([
-            'accNumber',
-            'depositAmount'
-        ]);
+        // $inputs = $this->helper->input_exist([
+        //     'accNumber',
+        //     'depositAmount'
+        // ]);
 
-        if($inputs){
-            self::$transaction->setAccountNumber($request->getInputHandler()->value("accNumber"));
+        // if($inputs){
+            self::$transaction->setAccountNumber(338869337);
             self::$transaction->setTransictionValue($request->getInputHandler()->value("depositAmount"));
     
             $this->query->depositValue(self::$transaction);
-        }
+        // }
 
     }
 
     public function transferValue(Request $request): void
     {
-        $inputs = $this->helper->input_exist([
-            'accNumber',
-            'transictionValue'
-        ]);
+        // $inputs = $this->helper->input_exist([
+        //     'accNumber',
+        //     'transictionValue'
+        // ]);
 
 
-        if($inputs){
+        // if($inputs){
             self::$transaction->setAccountNumber($request->getInputHandler()->value("accNumber"));
             self::$transaction->setTransictionValue($request->getInputHandler()->value("transictionValue"));
     
             $this->query->transferValue(self::$transaction);
-        }
+        // }
 
     }
 
     public function withdrawnValue(Request $request): void
     {
-        $inputs = $this->helper->input_exist([
-            'accNumber',
-            'amountWithdrawn'
-        ]);
+        // $inputs = $this->helper->input_exist([
+        //     'accNumber',
+        //     'amountWithdrawn'
+        // ]);
 
-        if($inputs){
-            self::$transaction->setAccountNumber($request->getInputHandler()->value("accNumber"));
+        // if($inputs){
+            self::$transaction->setAccountNumber(338869337);
             self::$transaction->setTransictionValue($request->getInputHandler()->value("amountWithdrawn"));
-    
+            setcookie('Teste', "Ola,mundo");
             $this->query->withdrawnValue(self::$transaction);
-        }
+        // }
     }
 }

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../../public/style/app.css" rel="stylesheet">
+    <link href="/style/app.css" rel="stylesheet">
     <title>WJCrypto | Register</title>
 </head>
 <body>
@@ -62,7 +62,7 @@
                 <br>
                 <div style="text-align: center;">
                     Have an account?
-                    <a href="" class="login-link">Sing in</a>
+                    <a href="login" class="login-link">Sing in</a>
                 </div>
 
             </div>

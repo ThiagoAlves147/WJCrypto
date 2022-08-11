@@ -22,6 +22,7 @@
     width: 32.0%;
     padding: 20px;
     box-shadow: 1px 2px 4px 1px rgb(129, 127, 127);
+    border: 1px solid rgb(211, 204, 204);
     background-color: white;
     border-radius: 13px;
     height: auto;
@@ -130,6 +131,15 @@
     cursor: pointer;
 }
 
+.link-transaction {
+    color: white;
+    text-decoration: none;
+}
+
+.link-transaction:hover {
+    color: white;
+}
+
 /* FINAL TELA DASHBOARD */
 
 /* INICIO TELA DE TRANSFERENCIA */
@@ -145,17 +155,28 @@
 }
 
 .transfer-cancel {
-    background-color: #dc3545;
-    border-color: #dc3545
+    color: black;
+    border: #32034e 1px solid;
 }
 
 .transfer-continue {
-    background-color: #0d6efd;
-    border-color: #0d6efd;
+    color: black;
+    border: #32034e 1px solid;
 }
 
 .transfer-cancel:hover, .transfer-continue:hover {
-    opacity: 0.8;
+    transition-duration: 0.4s;
+    color: white;
+}
+
+.transfer-cancel:hover {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.transfer-continue:hover {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
 }
 
 /* FINAL TELA DE TRANSFERENCIA */

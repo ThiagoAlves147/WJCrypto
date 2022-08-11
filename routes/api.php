@@ -2,6 +2,9 @@
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT , DELETE, OPTIONS");
+//header("Content-Type: application/json");
+
+date_default_timezone_set('America/Sao_Paulo');
 
 use App\Controllers\Api\StatementController;
 use App\Controllers\Api\TestController;
