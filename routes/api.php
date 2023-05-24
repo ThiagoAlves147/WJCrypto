@@ -19,6 +19,7 @@ Router::group(['prefix' => '/wjcrypto/api/'], function(){
 
     Router::group(['middleware', Auth::class], function(){
         Router::post('users/create', [UserController::class, 'createUser']);
+        Router::get('users/create_cnpj', [UserController::class, 'createUserCnpj']);
         Router::post('users/deposit', [TransactionController::class, 'depositValue']);
         Router::post('users/transfer', [TransactionController::class, 'transferValue']);
         Router::post('users/withdrawn', [TransactionController::class, 'withdrawnValue']);
@@ -26,3 +27,4 @@ Router::group(['prefix' => '/wjcrypto/api/'], function(){
     });
 
 });
+
